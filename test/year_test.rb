@@ -6,21 +6,27 @@ class YearTest < Test::Unit::TestCase
   def test_constructor
     year = CalRecycling::Year.new 2014
 
-    assert_same(2014, year.year)
+    assert_equal(2014, year.year)
   end
 
   def test_first_day
     year = CalRecycling::Year.new 2014
 
     # a wednesday
-    assert_same(3, year.first_day)
+    assert_equal(3, year.first_day)
   end
 
   def test_days
     year = CalRecycling::Year.new 2014
-    assert_same(365, year.days, '2014 not a leap year')
+    assert_equal(365, year.days, '2014 not a leap year')
 
     year = CalRecycling::Year.new 2016
-    assert_same(366, year.days, '2016 is a leap year')
+    assert_equal(366, year.days, '2016 is a leap year')
+  end
+
+  def test_easter
+    year = CalRecycling::Year.new 2014
+
+    assert_equal("04-20", year.easter)
   end
 end

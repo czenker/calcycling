@@ -1,4 +1,5 @@
 require 'date'
+require 'holidays'
 
 module CalRecycling
   class Year
@@ -14,6 +15,10 @@ module CalRecycling
 
     def days
       Date.leap?(@year) ? 366 : 365
+    end
+
+    def easter
+      Holidays.easter(@year).strftime('%m-%d')
     end
   end
 end
