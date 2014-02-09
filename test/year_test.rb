@@ -29,4 +29,14 @@ class YearTest < Test::Unit::TestCase
 
     assert_equal("04-20", year.easter)
   end
+
+  def test_equality
+    year = CalRecycling::Year.new 2014
+    other_year = CalRecycling::Year.new 2014
+
+    assert(year == year, 'equal to self')
+    assert(year == other_year, 'equal to other year instance with same year')
+    assert(year == 2014, 'equal to a fixnum year #1')
+    assert(2014 == year, 'equal to a fixnum year #2')
+  end
 end

@@ -20,5 +20,13 @@ module CalRecycling
     def easter
       Holidays.easter(@year).strftime('%m-%d')
     end
+
+    def to_i
+      @year.to_i
+    end
+
+    def == other
+      self.to_i == other.to_i
+    end
   end
 end
