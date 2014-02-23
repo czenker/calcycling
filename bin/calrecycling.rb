@@ -2,6 +2,7 @@
 
 require_relative "../lib/calrecycling"
 
-year = ARGV[0].to_i
+years = 1900..2100
+controller = CalRecycling::Controller.new
 
-puts CalRecycling.similar year, 1900..2200
+File.write("index.html", controller.indexAction)

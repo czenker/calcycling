@@ -1,3 +1,4 @@
+require_relative 'calrecycling/controller'
 require_relative 'calrecycling/version'
 require_relative 'calrecycling/year'
 
