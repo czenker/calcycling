@@ -1,0 +1,63 @@
+<%= render('_header') %>
+<div class="container">
+    <h1><%= @year.to_i %></h1>
+    <p>
+      If you have a calendar from <%= @year.to_i %> you
+      <% if @next_use %>
+        can use it again in <strong><%= link_year(@next_use) %></strong>.
+      <% else %>
+        can not reuse it in the next 500 years.
+      <% end %>
+      <% if @year >= @this_year and @previous_use != nil %>
+        Or you could reuse a calendar from <%= link_year(@previous_use) %>.
+      <% end %>
+    </p>
+    <h2>Recommendation</h2>
+      <% if @year <= @this_year %>
+          <% if @next_use == nil or @next_use - @this_year > 100 %>
+            <strong>Throw away</strong>
+            <p>You won't need it in the next 100 years.</p>
+          <% elsif @next_use - @this_year > 50 %>
+            <strong>Depends on your age</strong>
+            <p>It might be worth keeping, if you think you can live for another <%= @next_use - @this_year %> years.</p>
+          <% elsif @next_use - @this_year > 22 %>
+            <strong>Keep if you have room</strong>
+            <p>Keep it, if you have room to store calendars for the next <%= @next_use - @this_year %> years.</p>
+          <% elsif @next_use == @this_year %>
+            <strong>Use it</strong>
+            <p>It should be hanging on your wall right now.</p>
+          <% else %>
+            <strong>Keep</strong>
+            <p>You will need it in <%= @next_use - @this_year %> years.</p>
+          <% end %>
+      <% else %>
+          <% if @previous_use != nil and @previous_use >= @this_year %>
+            <strong>Reuse</strong>
+            <p>Buy a calendar in <%= link_year(@previous_use) %> and reuse it.</p>
+          <% elsif (@next_use.to_i - @year.to_i) <= 50 %>
+            <strong>Buy</strong>
+            <p>Buy this calendar and also use it in <%= @next_use %>.</p>
+          <% else %>
+            <strong>Don't buy</strong>
+            <p>It's not worth investing in a calendar that you won't need for another 50 years, right?</p>
+          <% end %>
+      <% end %>
+    <h2>Compatible calendars with <%= @year.to_i %></h2>
+
+    <ul class="years">
+      <% @other_years.each do |year| %><li><%= link_year(year.to_i) %></li><% end %>
+    </ul>
+    <p class="aside">
+      All these years are <%= "no " if @year.days == 365 %>leap years
+      and start on a <%= Date.new(@year.to_i, 1, 1).strftime('%A') %>.
+      Easter sunday is on <%= Holidays.easter(@year.to_i).strftime('%-d<sup>th</sup> of %B') %>.
+    </p>
+
+    <ul class="paginate">
+      <li class="previous"><%= link_year(@year.to_i - 1) %></li>
+      <li class="center"><a href="index.html">list</a></li>
+      <li class="next"><%= link_year(@year.to_i + 1) %></li>
+    </ul>
+
+</div>
+<%= render('_footer') %>

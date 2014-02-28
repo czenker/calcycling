@@ -1,0 +1,13 @@
+<%= render('_header') %>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>When can I use my calendar again?</h1>
+  </div>
+</div>
+<div class="container">
+    <ul class="years">
+      <% @years.each do |year| %><li><%= link_year(year.to_i) %></li><% end %>
+    </ul>
+</div>
+<%= render('_footer') %>
