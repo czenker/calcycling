@@ -1,0 +1,6 @@
+*
+!.git*
+!*.css
+!assets
+!assets/css
+!*.html
