@@ -1,8 +1,12 @@
 <%= render('_header') %>
+<div class="jumbotron">
+  <div class="container">
+    <h1>The year <%= @year.to_i %></h1>
+  </div>
+</div>
 <div class="container">
-    <h1><%= @year.to_i %></h1>
     <p>
-      If you have a calendar from <%= @year.to_i %> you
+      If you own a calendar from <%= @year.to_i %> you
       <% if @next_use %>
         can use it again in <strong><%= link_year(@next_use) %></strong>.
       <% else %>
@@ -15,48 +19,69 @@
     <h2>Recommendation</h2>
       <% if @year <= @this_year %>
           <% if @next_use == nil or @next_use - @this_year > 100 %>
+          <div class="alert alert-danger">
             <strong>Throw away</strong>
             <p>You won't need it in the next 100 years.</p>
+          </div>
           <% elsif @next_use - @this_year > 50 %>
+          <div class="alert alert-warning">
             <strong>Depends on your age</strong>
             <p>It might be worth keeping, if you think you can live for another <%= @next_use - @this_year %> years.</p>
+          </div>
           <% elsif @next_use - @this_year > 22 %>
+          <div class="alert alert-warning">
             <strong>Keep if you have room</strong>
             <p>Keep it, if you have room to store calendars for the next <%= @next_use - @this_year %> years.</p>
+          </div>
           <% elsif @next_use == @this_year %>
+          <div class="alert alert-success">
             <strong>Use it</strong>
             <p>It should be hanging on your wall right now.</p>
+          </div>
           <% else %>
+          <div class="alert alert-success">
             <strong>Keep</strong>
             <p>You will need it in <%= @next_use - @this_year %> years.</p>
+          </div>
           <% end %>
       <% else %>
           <% if @previous_use != nil and @previous_use >= @this_year %>
+          <div class="alert alert-warning">
             <strong>Reuse</strong>
             <p>Buy a calendar in <%= link_year(@previous_use) %> and reuse it.</p>
+          </div>
           <% elsif (@next_use.to_i - @year.to_i) <= 50 %>
+          <div class="alert alert-success">
             <strong>Buy</strong>
             <p>Buy this calendar and also use it in <%= @next_use %>.</p>
+          </div>
           <% else %>
+          <div class="alert alert-danger">
             <strong>Don't buy</strong>
             <p>It's not worth investing in a calendar that you won't need for another 50 years, right?</p>
+          </div>
           <% end %>
       <% end %>
-    <h2>Compatible calendars with <%= @year.to_i %></h2>
+    <h2>Calendars compatible with <%= @year.to_i %></h2>
 
     <ul class="years">
       <% @other_years.each do |year| %><li><%= link_year(year.to_i) %></li><% end %>
     </ul>
-    <p class="aside">
+    <p class="text-muted">
       All these years are <%= "no " if @year.days == 365 %>leap years
       and start on a <%= Date.new(@year.to_i, 1, 1).strftime('%A') %>.
       Easter sunday is on <%= Holidays.easter(@year.to_i).strftime('%-d<sup>th</sup> of %B') %>.
     </p>
 
-    <ul class="paginate">
-      <li class="previous"><%= link_year(@year.to_i - 1) %></li>
-      <li class="center"><a href="index.html">list</a></li>
-      <li class="next"><%= link_year(@year.to_i + 1) %></li>
+
+    <ul class="pager">
+      <% if @years.cover?(@year.to_i-1) %>
+        <li class="previous"><%= link_year(@year.to_i - 1) %></li>
+      <% end %>
+      <li><a href="index.html">Index</a></li>
+      <% if @years.cover?(@year.to_i+1) %>
+        <li class="next"><%= link_year(@year.to_i + 1) %></li>
+      <% end %>
     </ul>
 
 </div>

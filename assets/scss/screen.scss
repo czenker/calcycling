@@ -1,0 +1,55 @@
+@import "_bootstrap.scss";
+
+ul.years {
+  padding:0;
+
+  li {
+    display:inline-block;
+    padding: 0 0.5em 0 0;
+
+    &:after {
+      content: '•';
+      padding-left: 0.5em;
+    }
+
+    &:last-child:after {
+      display: none;
+    }
+  }
+}
+
+#footer {
+  background-color: $jumbotron-bg;;
+  margin-top: $line-height-computed;
+  padding-top:$line-height-computed / 2;
+}
+
+nav.paginate {
+  display:table;
+  width:100%;
+
+  ul.paginate {
+    display:table-row;
+    padding:0;
+
+    li {
+      display: table-cell;
+
+      &.previous {
+        text-align: left;
+        a:before {
+          content: '←';
+        }
+      }
+      &.center {
+        text-align: center;
+      }
+      &.next {
+        text-align: right;
+        a:after {
+          content: '→';
+        }
+      }
+    }
+  }
+}
